@@ -5,6 +5,17 @@ plugins {
 ext.moduleName = 'lavaplayer-jda-nas'
 version = '1.0.6.3'
 
+publishing {
+  publications {
+    maven(MavenPublication) {
+      groupId project.group
+      artifactId project.name
+      version project.version
+      from components.java
+    }
+  }
+}
+
 dependencies {
   implementation project(":udp-queue")
 
