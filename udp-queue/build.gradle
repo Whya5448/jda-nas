@@ -17,12 +17,6 @@ dependencies {
     compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
 }
 
-/*
-sourceSets {
-    main.resources.srcDirs += "${project(":udp-queue-natives").projectDir}/dist"
-}
-*/
-
 task copyNatives {
     if (!file("${projectDir}/src/main/resources/natives").exists()) {
         copy {
@@ -32,6 +26,5 @@ task copyNatives {
     }
     assert Files.exists(file("${projectDir}/src/main/resources/natives").toPath())
 }
-tasks.compileJava.dependsOn(copyNatives)
-
+compileJava.dependsOn(copyNatives)
 //compileJava.dependsOn(':udp-queue-natives:checkNatives')
