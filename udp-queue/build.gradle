@@ -17,17 +17,21 @@ dependencies {
     compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
 }
 
-jar {
-    doFirst {
+/*
+sourceSets {
+    main.resources.srcDirs += "${project(":udp-queue-natives").projectDir}/dist"
+}
+*/
+
+task copyNatives {
+    if (!file("${projectDir}/src/main/resources/natives").exists()) {
         copy {
             from "${project(":udp-queue-natives").projectDir}/dist"
-            into "${sourceSets.main.resources.srcDirs[0]}/natives"
+            into "${projectDir}/src/main/resources/natives"
         }
     }
-
-    doLast {
-        assert Files.exists(file("${sourceSets.main.resources.srcDirs[0]}/natives").toPath())
-    }
+    assert Files.exists(file("${projectDir}/src/main/resources/natives").toPath())
 }
+tasks.compileJava.dependsOn(copyNatives)
 
 //compileJava.dependsOn(':udp-queue-natives:checkNatives')
